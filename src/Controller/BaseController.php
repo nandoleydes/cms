@@ -98,6 +98,12 @@ class BaseController extends AbstractController
 
     /* #region - Read */
 
+    #[Route('/api/read', name: 'api_read')]
+    public function api_read(): Response
+    {
+        return Utils::getJsonResponse($this->baseSession->get('entityTree'));
+    }
+
     #[Route('/', name: 'app_main')]
     public function index(): Response
     {
