@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Create content{% endblock %}
+
+{% block body %}
+<div class="container mt-2">
+
+    {% include 'includes/heading.html.twig' with {'title': 'Add new content'}  %}
+
+    <div class="row mt-5 justify-content-around">
+        <div class="col col-md-12">
+        {{ form_start(form_create, {'attr': {'class': 'row'}}) }}
+            <div class="col form-group col-md-1">
+                {{ form_label(form_create.active) }}
+                {{ form_widget(form_create.active) }}
+            </div>
+            <div class="col form-group col-md-1">
+                {{ form_label(form_create.position) }}
+                {{ form_widget(form_create.position, {
+                    'attr': {
+                        'class': 'form-control',
+                        'id': 'Position',
+                        'min': 1,
+                        'max': max,
+                        'value': max
+                    }
+                }) }}
+            </div>
+            <div class="col form-group col-md-2">
+                {{ form_label(form_create.title) }}
+                {{ form_widget(form_create.title, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="col form-group col-md-2">
+                {{ form_label(form_create.label) }}
+                {{ form_widget(form_create.label, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="col form-group col-md-4">
+                {{ form_label(form_create.content) }}
+                {{ form_widget(form_create.content, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="col form-group col-md-2">
+                {{ form_label(form_create.parentId) }}
+                {{ form_widget(form_create.parentId, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            {% include 'includes/form_buttons.html.twig' with { 'path': path('app_main') } %}
+        {{ form_end(form_create) }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

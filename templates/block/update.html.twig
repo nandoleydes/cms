@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Update Block{% endblock %}
+
+{% block body %}
+<div class="container mt-2">
+
+    {% include 'includes/heading.html.twig' with {'title': 'Update block'}  %}
+
+    <div class="row mt-5 justify-content-around">
+        <div class="col col-md-6">
+        {{ form_start(form_update, {'attr': {'class': 'row'}}) }}
+            <div class="col form-group col-md-1">
+                {{ form_label(form_update.active) }}
+                {{ form_widget(form_update.active) }}
+            </div>
+            <div class="col form-group col-md-2">
+                {{ form_label(form_update.position) }}
+                {{ form_widget(form_update.position, {
+                    'attr': {
+                        'class': 'form-control',
+                        'id': 'Position',
+                        'min': 1,
+                        'max': max
+                    }
+                }) }}
+            </div>
+            <div class="col form-group col-md-6">
+                {{ form_label(form_update.title) }}
+                {{ form_widget(form_update.title, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            <div class="col form-group col-md-3"{% if isSub %} style="display:none;"{% endif %}>
+                {{ form_label(form_update.parentId) }}
+                {{ form_widget(form_update.parentId, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+            {% include 'includes/form_buttons.html.twig' with { 'path': path('app_main') } %}
+        {{ form_end(form_update) }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

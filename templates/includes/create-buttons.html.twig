@@ -1,0 +1,41 @@
+<a style="float:right;" title="Add Content" class="btn btn-link btn-sm" href="{{
+    path('content_create', {
+        'aParentId': aParentId
+    })
+}}"><i class="fa-solid fa-file-lines"></i></a>
+
+<a style="float:right;" title="Add Block" class="btn btn-link btn-sm" href="{{
+    path('block_create', {
+        'aParentId': aParentId
+    })
+}}"><i class="fa-solid fa-folder-open"></i></a>
+
+<a style="float:right;" title="Add Image" class="btn btn-link btn-sm" href="{{
+    path('image_create', {
+        'aParentId': aParentId
+    })
+}}"><i class="fa-regular fa-image"></i></a>
+
+{% if isContactInfo == false and isSub == false %}
+    <a style="float:right;" title="Add ContactInfo" class="btn btn-link btn-sm" href="{{
+        path('contactinfo_create', {
+            'aParentId': aParentId
+        })
+    }}"><i class="fa-regular fa-address-card"></i></a>
+{% endif %}
+
+{% if isExperience == false and isSub == false %}
+    <a style="float:right;" title="Add Experience" class="btn btn-link btn-sm" href="{{
+        path('experience_create', {
+            'aParentId': aParentId
+        })
+    }}"><i class="fa-solid fa-toolbox"></i></a>
+{% endif %}
+
+{% if isEducation == false and isSub == false %}
+    <a style="float:right;" title="Add Education" class="btn btn-link btn-sm" href="{{
+        path('education_create', {
+            'aParentId': aParentId
+        })
+    }}"><i class="fa-solid fa-graduation-cap"></i></a>
+{% endif %}

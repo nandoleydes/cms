@@ -1,0 +1,101 @@
+{% set paddingStart = 'style=padding-left:' %}
+{% set paddingEnd = 'px' %}
+
+{% set colorStart = 'style=color:' %}
+
+{% for child in children %}
+    {% set isContent = child.type == clsContent %}
+    {% set isBlock = child.type == clsBlock %}
+    {% set isContactInfo = child.type == clsContactInfo %}
+    {% set isExperience = child.type == clsExperience %}
+    {% set isEducation = child.type == clsEducation %}
+    {% set isImage = child.type == clsImage %}
+    {% set hasImage = isImage and child.content != '' %}
+    {% set showCreateButtons = isImage == false %}
+
+    {% set color = childColors[colorIndex] %}
+
+    {% set backgroundColor = parentIsActive and child.active ? '' : 'style=background-color:#eee' %}
+
+    <tr {{backgroundColor}}>
+        <td {{ paddingStart ~ padding ~ paddingEnd }}>
+            {% set parentType = isContent ? clsContent : clsBlock %}
+
+            {% if showCreateButtons %}
+                {% include "includes/create-buttons.html.twig" with {
+                    'aParentId': child.id,
+                    'isContactInfo': isContactInfo,
+                    'isExperience': isExperience,
+                    'isEducation': isEducation,
+                    'isSub': child.isSub
+                } %}
+            {% endif %}
+
+            <b {{ colorStart ~ color }}>
+
+                {% if isContent %}<i class="fa-solid fa-file-lines"></i>
+                {% elseif isImage %}<i class="fa-regular fa-image"></i>
+                {% elseif isContactInfo %}<i class="fa-regular fa-address-card"></i>
+                {% elseif isExperience %}<i class="fa-solid fa-toolbox"></i>
+                {% elseif isEducation %}<i class="fa-solid fa-graduation-cap"></i>
+                {% else %}<i class="fa-solid fa-folder-open"></i>
+                {% endif %}
+
+                {% if isContent and child.label != '' and child.title == '' %}({{ child.label }}) {% endif %}
+                {{ child.title }}
+
+            </b>
+
+            {% if isImage and hasImage %}
+                <br><img width="100" src="{{ asset('images/' ~ child.content) }}">
+            {% endif %}
+
+            {% if isContent and child.content != '' %}<br><small style="display:inline-block;padding-left:16px;font-style:italic;">{{ child.content }}</small>{% endif %}
+        </td>
+        <td>
+            {% if isContent or isImage %}
+                <a class="btn btn-dark btn-sm" title="Update" href="{{ path('content_update', { 'aId': child.id }) }}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                {% if child.isSub == false %}
+                    <a class="btn btn-danger btn-sm" title="Delete" href="{{ path('content_delete', { 'aId': child.id }) }}">
+                        <i class="fa-sharp fa-solid fa-trash"></i>
+                    </a>
+                {% endif %}
+            {% elseif isBlock or isContactInfo or isExperience or isEducation %}
+                {% if child.isSub == false %}
+                    <a class="btn btn-dark btn-sm" title="Update" href="{{ path('block_update', { 'aId': child.id }) }}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                {% endif %}
+                <a class="btn btn-danger btn-sm" title="Delete" href="{{ path('block_delete', { 'aId': child.id }) }}">
+                    <i class="fa-sharp fa-solid fa-trash"></i>
+                </a>
+            {% endif %}
+
+            {% include "includes/move-buttons.html.twig" with {
+                'entity': child,
+                'entitiesLength': children|length,
+                'moveButtonColors': moveButtonColors,
+                'colorIndex': colorIndex
+            } %}
+        </td>
+    </tr>
+
+    {% if child.children %}
+        {% set newColorIndex = colorIndex < 6 ? colorIndex + 1 : 0 %}
+
+        {% set parentIsActive = child.active and parentIsActive %}
+
+        {% include "includes/children-list.html.twig" with {
+            'children': child.children,
+            'clsContent': clsContent,
+            'clsBlock': clsBlock,
+            'padding': padding + step,
+            'moveButtonColors': moveButtonColors,
+            'colorIndex': newColorIndex,
+            'parentIsActive': parentIsActive
+        } %}
+    {% endif %}
+
+{% endfor %}

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}contents{% endblock %}
+
+{% block body %}
+<div class="container mt-2">
+
+    {% include 'includes/heading.html.twig' with {'title': 'Contents'}  %}
+
+    <div class="row mt-5 justify-content-around">
+      <div class="col col-md-10">
+        {% if contents %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Label</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Parent</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for content in contents %}
+                        <tr>
+                            <td>{{ content.title }}</td>
+                            <td>{{ content.label }}</td>
+                            <td>{{ content.content }}</td>
+                            <td>{{ content.parent }}</td>
+                            <td>
+                                <a href="{{ path('content_update', { 'aId': content.id }) }}" class="btn btn-primary">Update</a>
+                                <a href="{{ path('content_delete', { 'aId': content.id }) }}" class="btn btn-danger">&times;</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row mt-2 justify-content-around">
+        <div class="col mt-2 col-md-10">
+            <a href="{{ path('content_create') }}" class="btn btn-primary">Add new content</a>
+        </div>
+    </div>
+  </div>
+{% endblock %}

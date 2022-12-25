@@ -1,0 +1,12 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block file_widget %}
+    {{ block('form_widget') }}
+    {% if image_url is defined and image_url is not null and image_url != '' %}
+    {{ block('persisted_image') }}
+    {% endif %}
+{% endblock %}
+
+{% block persisted_image %}
+    <img style="width:415px; margin-top:10px;" src="{{ asset('images/') ~ image_url }}"/>
+{% endblock %}

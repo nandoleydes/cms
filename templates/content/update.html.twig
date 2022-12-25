@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Update Content{% endblock %}
+
+{% block body %}
+<div class="container mt-2">
+
+    {% include 'includes/heading.html.twig' with {'title': 'Update content'}  %}
+
+        {{ form_start(form_update, {'attr': {'class': 'container'}}) }}
+
+        <div class="row">
+            <div class="col form-group col-md-1">
+                {{ form_label(form_update.active) }}
+                {{ form_widget(form_update.active) }}
+            </div>
+            <div class="col form-group col-md-1">
+                {{ form_label(form_update.position) }}
+                {{ form_widget(form_update.position, {
+                    'attr': {
+                        'class': 'form-control',
+                        'id': 'Position',
+                        'min': 1,
+                        'max': max
+                    }
+                }) }}
+            </div>
+            <div class="col form-group col-md-4">
+                {{ form_label(form_update.title) }}
+                {{ form_widget(form_update.title, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+
+            <div class="col form-group col-md-4"{% if isSub %} style="display:none;"{% endif %}>
+                {{ form_label(form_update.label) }}
+                {{ form_widget(form_update.label, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+
+            <div class="col form-group col-md-2"{% if isSub %} style="display:none;"{% endif %}>
+                {{ form_label(form_update.parentId) }}
+                {{ form_widget(form_update.parentId, { 'attr': { 'class': 'form-control' } }) }}
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col form-group col-md-12">
+                {{ form_label(form_update.content) }}
+                {{ form_widget(form_update.content, { 'attr': { 'class': 'form-control', 'rows': 12 } }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            {% include 'includes/form_buttons.html.twig' with { 'path': path('app_main') } %}
+        </div>
+
+        {{ form_end(form_update) }}
+
+
+</div>
+{% endblock %}

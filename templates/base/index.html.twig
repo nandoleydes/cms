@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+
+<div class="container mt-2">
+
+    {% include 'includes/heading.html.twig' with {'title': constant('App\\Constants::PAGE_MAIN')}  %}
+
+    <div class="row mt-5 justify-content-around">
+      <div class="col col-md-10">
+        {% if sections %}
+            <table class="table">
+                <tbody>
+                    {% for section in sections %}
+
+                        {% set backgroundColor = section.active == false ? 'style=background-color:#eee' : '' %}
+
+                        <tr {{backgroundColor}}>
+                            <td class="col col-md-8">
+                                {% set colorStart = 'style=color:' %}
+                                {% set color = childColors[0] %}
+                                <b {{ colorStart ~ color }}>
+                                    <i class="fa-solid fa-box"></i>
+                                    {{ section.title }}
+                                </b>
+
+                                {% include "includes/create-buttons.html.twig" with {
+                                    'aParentId': section.id,
+                                    'isContactInfo': false,
+                                    'isExperience': false,
+                                    'isEducation': false,
+                                    'isSub': false
+                                } %}
+                            </td>
+                            <td class="col col-md-4">
+                                <a class="btn btn-dark btn-sm" href="{{ path('section_update', { 'aId': section.id }) }}">
+                                    <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                                </a>
+
+                                <a class="btn btn-danger btn-sm" href="{{ path('section_delete', { 'aId': section.id }) }}">
+                                    <i class="fa-sharp fa-solid fa-trash"></i>
+                                </a>
+
+                                {% include "includes/move-buttons.html.twig" with {
+                                    'entity': section,
+                                    'entitiesLength' : sections|length,
+                                    'moveButtonColors': moveButtonColors,
+                                    'colorIndex': 0
+                                } %}
+                            </td>
+                        </tr>
+
+                        {% if section.children %}
+                        {% set padding = 20 %}
+
+                            {% include "includes/children-list.html.twig" with {
+                                'children': section.children,
+                                'clsContent': clsContent,
+                                'clsBlock': clsBlock,
+                                'clsContactInfo': clsContactInfo,
+                                'clsExperience': clsExperience,
+                                'clsEducation': clsEducation,
+                                'clsImage': clsImage,
+                                'padding': padding,
+                                'step': padding,
+                                'moveButtonColors': moveButtonColors,
+                                'colorIndex': 1,
+                                'childColors': childColors,
+                                'parentIsActive': section.active
+                            } only %}
+                        {% endif %}
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}

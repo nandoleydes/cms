@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}blocks{% endblock %}
+
+{% block body %}
+<div class="container mt-2">
+
+    {% include 'includes/heading.html.twig' with {'title': 'Blocks'}  %}
+
+    <div class="row mt-5 justify-content-around">
+      <div class="col col-md-6">
+        {% if blocks %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Parent</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for block in blocks %}
+                        <tr>
+                            <td>{{ block.title }}</td>
+                            <td>{{ block.parent }}</td>
+                            <td>
+                                <a href="{{ path('block_update', { 'aId': block.id }) }}" class="btn btn-primary">Update</a>
+                                <a href="{{ path('block_delete', { 'aId': block.id }) }}" class="btn btn-danger">&times;</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row mt-2 justify-content-around">
+        <div class="col mt-2 col-md-6">
+            <a href="{{ path('block_create') }}" class="btn btn-primary">Add new block</a>
+        </div>
+    </div>
+  </div>
+{% endblock %}

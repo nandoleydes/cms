@@ -1,0 +1,13 @@
+{% set classes = html_classes('btn', 'btn-sm', 'btn-outline-' ~ moveButtonColors[colorIndex]) %}
+
+{% if entity.position > 1 %}
+    <a href="{{ path('move', { 'aId': entity.id, 'aDirection': constant('App\\Constants::UP') }) }}" title="Move up" class="{{ classes }}">
+        <i class="fa fa-caret-up" aria-hidden="true"></i>
+    </a>
+{% endif %}
+
+{% if entity.position < entitiesLength %}
+<a href="{{ path('move', { 'aId': entity.id, 'aDirection': constant('App\\Constants::DOWN') }) }}" title="Move down" class="{{ classes }}">
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+</a>
+{% endif %}

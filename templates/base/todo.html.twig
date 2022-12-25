@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo{% endblock %}
+
+{% block body %}
+
+<div class="container mt-2">
+
+    {% include 'includes/heading.html.twig' with {'title': 'Todo'}  %}
+
+    <div class="row mt-5 justify-content-around">
+      <div class="col col-md-6">
+        {% if todos %}
+        <ul>
+            {% for todo in todos %}
+                <li>{{ todo }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
